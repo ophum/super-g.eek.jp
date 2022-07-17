@@ -5,7 +5,7 @@ author: [hum_op]
 tags: [infra]
 ---
 
-[HashiCorp Vault](https://www.vaultproject.io/)(以下 vault)を利用してパスワードなどの機密情報を安全に保存し、それを Ansible で利用してみました。
+[HashiCorp Vault](https://www.vaultproject.io/)(以下 vault)を利用してパスワードなどの機密情報を保存し、それを Ansible で利用してみました。
 
 ## 検証環境
 
