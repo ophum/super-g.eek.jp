@@ -1,0 +1,9 @@
+baseURL = "https://super-g.eek.jp/"
+languageCode = "ja-jp"
+title = "SUPER-G.EEK.JP"
+theme = "ananke"
+
+[taxonomies]
+tag = "tags"
+category = "categories"
+author = "authors"
