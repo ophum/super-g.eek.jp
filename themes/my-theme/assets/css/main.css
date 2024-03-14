@@ -62,4 +62,12 @@ pre code {
   color: black;
 }
 
+p img {
+  width: 100%;
+  margin: 0;
+  border: 4px solid gray;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
 
