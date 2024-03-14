@@ -27,7 +27,7 @@ DISTRIB_DESCRIPTION="Ubuntu 20.04.4 LTS"
 
 `~/hashicorp-vault-ansible`というディレクトリで作業することにします。
 
-```
+```bash
 $ mkdir ~/hashicorp-vault-ansible
 ```
 
@@ -38,7 +38,7 @@ vault はバイナリをダウンロードして利用するか、各 OS 向け�
 
 - ドキュメント [Install Vault](https://learn.hashicorp.com/tutorials/vault/getting-started-install?in=vault/getting-started)
 
-```
+```bash
 $ cd ~/hashicorp-vault-ansible
 $ curl -O https://releases.hashicorp.com/vault/1.11.0/vault_1.11.0_linux_amd64.zip
 $ unzip vault_1.11.0_linux_amd64.zip
@@ -50,7 +50,7 @@ Vault v1.11.0 (ea296ccf58507b25051bc0597379c467046eb2f1), built 2022-06-17T15:48
 
 pipenv で python をインストールしつつ、pip で ansible をインストールします。
 
-```
+```bash
 $ sudo apt update
 $ sudo apt install pipenv
 $ pipenv --python 3
@@ -63,7 +63,7 @@ $ pip install ansible
 
 [community.hashi_vault](https://docs.ansible.com/ansible/latest/collections/community/hashi_vault/index.html)という collection を利用します。
 
-```
+```bash
 $ pip install hvac
 $ ansible-galaxy collection install community.hashi_vault
 ```
@@ -72,7 +72,7 @@ $ ansible-galaxy collection install community.hashi_vault
 
 以下のコマンドで vault dev server を起動できます
 
-```
+```bash
 $ vault server -dev
 ==> Vault server configuration:
 
@@ -97,7 +97,7 @@ Api Address (http://127.0.0.1:8200/)にブラウザでアクセスするとUIを
 
 ログの最後に以下のようなメッセージが出力されるので、この Root Token(`hvs.0KXrA6oFiZnLBJpvoMnPc4vB`) を利用してログインします。
 
-```
+```bash
 WARNING! dev mode is enabled! In this mode, Vault runs entirely in-memory
 and starts unsealed with a single unseal key. The root token is already
 authenticated to the CLI, so you can immediately begin using Vault.
@@ -157,7 +157,7 @@ Development mode should NOT be used in production installations!
 Ansible で Vault を利用するために使用する Token を設定します。  
 playbook に直接記入できますが、メリットはないので ansible.cfg などに記述し git 管理しないようにします。
 
-```
+```bash
 $ cat <<EOF > ansible.cfg
 [hashi_vault_collection]
 token = "hvs.jkOyqGirKFHOLmpgIvneu52B"
@@ -172,7 +172,7 @@ kv(version 2) の secret engine からデータを取得する場合[`community.
 
 lookup の第 2 引数にシークレットの名前を指定します。また、engine の名前(`kv-test`)を`engine_mount_point`で指定します。
 
-```
+```bash
 cat <<EOF > playbook.yml
 - hosts: localhost
   gather_facts: false
@@ -196,7 +196,7 @@ EOF
 
 先ほど UI で登録したデータを取得できていることが分かります。
 
-```
+```bash
 $ ansible-playbook playbook.yml
 [WARNING]: provided hosts list is empty, only localhost is available. Note that the implicit localhost does not match 'all'
 

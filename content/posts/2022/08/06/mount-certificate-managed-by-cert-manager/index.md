@@ -1,9 +1,9 @@
 ---
 title: "[k8s] cert-managerで管理している証明書を外部マシンで利用する"
 date: "2022-08-06"
-categories: 
+categories:
   - "infra"
-tags: 
+tags:
   - "cert-manager"
   - "k8s"
 ---
@@ -40,7 +40,7 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 
 #### CA の作成
 
-```
+```yaml
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
@@ -77,7 +77,7 @@ spec:
 
 ### 自己署名証明書発行
 
-```
+```yaml
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -112,7 +112,7 @@ spec:
 
 apply すると以下のように証明書が作成され READY が True になります。
 
-```
+```bash
 hum@ryzen5pc:~/cert$ kubectl get cert
 NAME                     READY   SECRET                   AGE
 my-selfsigned-ca         True    root-secret              117s
@@ -121,7 +121,7 @@ selfsigned.example.com   True    selfsigned.example.com   2s
 
 ついでに hosts に登録しておきます
 
-```
+```bash
 echo "127.0.0.1 selfsigned.example.com" | sudo tee -a /etc/hosts
 ```
 
@@ -129,13 +129,13 @@ echo "127.0.0.1 selfsigned.example.com" | sudo tee -a /etc/hosts
 
 k8s-secret-fs のバイナリをダウンロードします。
 
-```
+```bash
 wget https://github.com/ophum/k8s-secret-fs/releases/download/v0.2.0/k8s-secret-fs_0.2.0_linux_amd64.tar.gz -O - | tar xvz
 ```
 
 設定ファイルを作成します。
 
-```
+```bash
 cat <<EOF > config.yaml
 kubeconfig: ${HOME}/.kube/config
 namespace: default
@@ -146,19 +146,19 @@ EOF
 
 マウントポイントを作成します。
 
-```
+```bash
 sudo mkdir -p /mnt/k8s-secret-fs
 ```
 
 起動します。
 
-```
+```bash
 sudo ./k8s-secret-fs -config config.yaml &
 ```
 
 マウントポイントを `ls` で見てみると以下のように証明書ファイルが出来ていることが分かります。
 
-```
+```bash
 sudo ls /mnt/k8s-secret-fs
 ca.crt  tls.crt  tls.key
 ```
@@ -169,13 +169,13 @@ WSL2 上にマウントできたので、このファイルを nginx で利用�
 
 まずは nginx をインストールします。
 
-```
+```bash
 sudo apt install nginx
 ```
 
 設定ファイルを作成します。
 
-```
+```bash
 cat <<EOF | sudo tee /etc/nginx/sites-available/ssl.conf
 server {
         listen 443 ssl default_server;
@@ -198,7 +198,7 @@ sudo ln -s /etc/nginx/sites-available/ssl.conf /etc/nginx/sites-enabled/ssl.conf
 
 nginx を起動します。(WSL2 では systemd が動作していないため直接起動)
 
-```
+```bash
 sudo nginx
 ```
 
@@ -206,7 +206,7 @@ sudo nginx
 
 `https://selfsigned.example.com`に ca ファイルを指定して curl してみます。
 
-```
+```bash
  sudo curl https://selfsigned.example.com/ -v --cacert /mnt/k8s-secret-fs/ca.crt
 *   Trying 127.0.0.1:443...
 * TCP_NODELAY set

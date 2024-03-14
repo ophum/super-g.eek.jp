@@ -9,8 +9,8 @@ vault の認証に OpenID Connect(oidc)を設定してみました。
 
 以下の docker-compose.yml を使用しました。(永続化はしていません。)
 
-```
-version: '3'
+```yaml
+version: "3"
 
 services:
   vault:
@@ -31,13 +31,13 @@ services:
 
 実行
 
-```
+```bash
 $ docker compose up -d
 ```
 
 また、hosts(Windows は`C:\Windows\System32\drivers\etc\hosts`) に以下を追記します。(vault から keycloak へのアクセスは docker 内部での名前解決される keycloak を使用するためログイン時に指定される keycloak への URL のアドレスが keycloak になります。そのため、ホストマシンでも keycloak の名前解決がされる必要があります。)
 
-```
+```text
 127.0.0.1 keycloak
 ```
 
@@ -99,7 +99,7 @@ http://localhost:8200/ui にアクセスしログインします。
 
 ログイン時に使用するトークンは、以下のようにして確認できます。(dev サーバーのためログに出力されている)
 
-```
+```bash
 $ docker compose logs vault | grep "Root Token"
 vault-keycloak-vault-1  | Root Token: hvs.2iU2XXolR61jjKITfSJTZaJ3
 ```
@@ -137,7 +137,7 @@ OIDC で認証する際のロールを作成します。この操作は CLI か�
 
 以下のようにして Root Token を利用して CLI から操作できるようにします。
 
-```
+```bash
 $ docker compose exec vault sh
 / # export VAULT_TOKEN=hvs.2iU2XXolR61jjKITfSJTZaJ3
 / # export VAULT_ADDR=http://localhost:8200
@@ -159,12 +159,12 @@ HA Enabled      false
 
 以下のコマンドを実行しロールを作成します。
 
-user\_claim には userinfo で提供されている項目のうちユニークなものを選びます。  
+user_claim には userinfo で提供されている項目のうちユニークなものを選びます。  
 公式ドキュメントなどでは`sub`を利用するようになっており Keycloak の場合は ID(uuid)が入ります。
 
 今回は`email`を利用するようにします。
 
-```
+```bash
 $ vault write auth/oidc/role/keycloak -<<EOF
 {
   "user_claim": "email",
@@ -181,7 +181,7 @@ EOF
 
 以下のように設定されているのが確認できます。
 
-```
+```bash
 / # vault read auth/oidc/role/keycloak
 Key                        Value
 --- -----
@@ -237,7 +237,7 @@ verbose_oidc_logging       false
 
 以下のように ポリシーを作成・指定すると見えるようになります。
 
-```
+```bash
 $ vault policy write oidc-user - << EOF
 path "secret/secret/*" {
   capabilities = ["create", "update", "delete", "read", "list", "sudo"]

@@ -25,22 +25,23 @@ a {
 
 pre{
   overflow: auto;
-  background-color: black;
-  color: white;
+  background-color: #272822;
+  color: #f8f8f2;
   font-size: 1.1rem;
   padding: 1rem;
 }
 
 code {
-  background-color: darkgray;
-  color: black;
+  background-color: #272822;
+  color: #f8f8f2;
   border-radius: 4px;
   padding: 0 0.255555rem
 }
 
 pre code {
-  background-color: black;
-  color: white;
+  background-color: #272822;
+  color: #f8f8f2;
+  padding: 0;
 }
 
 .site-title {

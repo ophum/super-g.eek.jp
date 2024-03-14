@@ -1,15 +1,15 @@
 ---
 title: "[Golang] encoding/jsonで文字列の数値を数値型で扱う"
 date: "2023-01-20"
-categories: 
+categories:
   - "プログラミング"
-tags: 
+tags:
   - "golang"
 ---
 
 以下のようにすることで文字列の数値を数値型で扱うことができます。
 
-```
+```golang
 package main
 
 import (
