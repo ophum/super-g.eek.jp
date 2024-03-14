@@ -47,6 +47,8 @@ pre code {
 .site-title {
   font-weight: bold;
   font-size: 3rem;
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .post-list {
