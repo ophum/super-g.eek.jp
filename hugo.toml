@@ -1,4 +1,6 @@
 baseURL = 'https://super-g.eek.jp/'
-languageCode = 'ja-jp'
+languageCode = 'ja'
 title = 'SUPER-G.EEK.JP'
 theme = 'my-theme'
+defaultContentLanguage = "ja"
+hasCJKLanguage = true
