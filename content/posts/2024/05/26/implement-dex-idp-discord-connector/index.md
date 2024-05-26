@@ -1,7 +1,7 @@
 ---
 title: "dexidp/dexのconnectorを実装してdiscord OAuth2で認証できるようにした"
 date: "2024-05-26T16:18:09+09:00"
-draft: true
+draft: false
 ---
 
 [dexidp/dex](https://github.com/dexidp/dex)を利用することで OIDC に対応していない認証サーバーで OIDC できるようになります。
