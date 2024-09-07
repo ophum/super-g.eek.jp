@@ -5,6 +5,12 @@
   {{ $dateHuman := .Date | time.Format ":date_long" }}
   <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
 
+  <div class="toc">
+    <span>目次</span>
+      {{ .TableOfContents }}
+    </div>
+  </div>
+
   {{ .Content }}
   {{ partial "terms.html" (dict "taxonomy" "tags" "page" .) }}
 {{ end }}
