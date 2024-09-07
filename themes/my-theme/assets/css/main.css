@@ -88,3 +88,9 @@ table td, th {
   padding: 0.5rem;
   border: 1px dashed gray;
 }
+
+blockquote {
+  margin-left: 0.5rem;
+  padding: 0.25rem 0 0.25rem 2rem;
+  border-left: 2px solid gray;
+}

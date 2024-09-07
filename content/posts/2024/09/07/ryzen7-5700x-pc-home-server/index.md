@@ -1,7 +1,11 @@
 ---
 title: "Ryzen7 5700X で PC を組んで自宅サーバーにした"
 date: "2024-09-07T23:39:22+09:00"
-draft: true
+draft: false
+categories:
+  - infra
+tags:
+  - homelab
 ---
 
 最近、Ryzen7 5700X が安いタイミングがありましたので安めのパーツで PC を組んで自宅サーバーにしてみました。
