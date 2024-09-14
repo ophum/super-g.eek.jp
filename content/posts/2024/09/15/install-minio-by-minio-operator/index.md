@@ -74,7 +74,7 @@ patches で`kind: Tenant`の設定内容を変更しています。
 
 WebUI にアクセスできるように Ingress を追加します。
 
-```bash
+```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -101,7 +101,6 @@ spec:
                 name: myminio-console
                 port:
                   number: 9443
-
 ```
 
 ingress-nginx を利用しています。annotations で`-snippet`を利用するには、ingress-nginx のインストール時に許可する必要があります。
