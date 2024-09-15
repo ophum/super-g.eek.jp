@@ -35,8 +35,9 @@ code {
   background-color: #272822;
   color: #f8f8f2;
   border-radius: 4px;
-  padding: 0 0.25rem;
+  padding: 0.125rem 0.25rem;
   margin: 0 0.25rem;
+  overflow-wrap: anywhere;
 }
 
 pre code {
