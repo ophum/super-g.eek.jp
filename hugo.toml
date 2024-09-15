@@ -4,3 +4,4 @@ title = 'SUPER-G.EEK.JP'
 theme = 'my-theme'
 defaultContentLanguage = "ja"
 hasCJKLanguage = true
+pygmentsOptions = "linenos=inline"
