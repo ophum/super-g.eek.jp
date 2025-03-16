@@ -489,7 +489,7 @@ HA Enabled         true
 
 Root Token でログインします。
 
-(※出力の token が github に push するときに怒られるので伏字にしてます)
+(※出力の token が github に push するときに怒られるので伏字にしてますが、本来は平文で出力されます。本番で作業ログで出力を保存する際は気を付けたほうがいいかもしれない。)
 
 ```
 $ export CLUSTER_ROOT_TOKEN=$(cat ${WORKDIR}/cluster-keys.json | jq -r ".root_token")
