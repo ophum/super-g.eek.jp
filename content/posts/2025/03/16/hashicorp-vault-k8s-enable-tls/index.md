@@ -249,7 +249,9 @@ secret/vault-ha-tls created
 
 ## Helm を使って vault cluster をデプロイする
 
-values.yaml を上書きする
+### overrides.yaml を作成する
+
+values.yaml を上書きするための overrides.yaml を作成します。
 
 ```
 $ cat > ${WORKDIR}/overrides.yaml <<EOF
@@ -304,6 +306,8 @@ volumes で先ほど作成した TLS の Secret リソースを指定し、volum
 
 また `server.ha.config`の `listener "tcp"`の `tls_{cert,key,client_ca}_file`にマウントした Secret のファイルのパスを指定しています。
 
+### helm install
+
 この overrides.yaml を指定して`helm install`を実行します。
 
 ```
@@ -328,6 +332,10 @@ Your release is named vault. To learn more about the release, try:
   $ helm get manifest vault
 ```
 
+## vault-0 をセットアップする
+
+### 初期化する
+
 しばらくすると Pod が Running になります
 
 ```
@@ -347,6 +355,8 @@ $ kubectl exec -n $VAULT_K8S_NAMESPACE vault-0 -- vault operator init \
     -key-threshold=1 \
     -format=json > ${WORKDIR}/cluster-keys.json
 ```
+
+### Unseal する
 
 初期化しただけだと Seal 状態なのでまだ READY が `0/1`です。
 
@@ -413,7 +423,11 @@ vault-2                                 0/1     Running   0          5m11s
 vault-agent-injector-8666bf4bb8-w9l82   1/1     Running   0          5m21s
 ```
 
-vault-1 と vault-2 を Raft cluster に join させます。
+## vault-1 をセットアップする
+
+### Raft cluster に Join させる
+
+vault-1 を Raft cluster に join させます。
 
 ```
 $ kubectl exec -n $VAULT_K8S_NAMESPACE -it vault-1 -- /bin/sh
@@ -426,7 +440,7 @@ Joined    true
 / $ exit
 ```
 
-Unseal します。
+### Unseal する
 
 ```
 $ kubectl exec -n $VAULT_K8S_NAMESPACE -ti vault-1 -- vault operator unseal $VAULT_UNSEAL_KEY
@@ -456,7 +470,9 @@ vault-2                                 0/1     Running   0          7m49s
 vault-agent-injector-8666bf4bb8-w9l82   1/1     Running   0          7m59s
 ```
 
-同じように vault-2 も Join させます。
+## vault-2 をセットアップする
+
+### Raft cluster に Join させる
 
 ```
 $ kubectl exec -n $VAULT_K8S_NAMESPACE -it vault-2 -- /bin/sh
@@ -467,6 +483,8 @@ Key       Value
 Joined    true
 / $ exit
 ```
+
+### Unseal する
 
 ```
 $ kubectl exec -n $VAULT_K8S_NAMESPACE -ti vault-2 -- vault operator unseal $VAULT_UNSEAL_KEY
@@ -485,7 +503,9 @@ Storage Type       raft
 HA Enabled         true
 ```
 
-### 状態を確認する
+## 動作確認
+
+### Vault cluster の状態を確認する
 
 Root Token でログインします。
 
@@ -584,7 +604,7 @@ version            1
 / $ exit
 ```
 
-#### 作成した KV SecretEngine に API で接続する
+### API で KV SecretEngine からシークレット情報を取得する
 
 vault の Service
 
