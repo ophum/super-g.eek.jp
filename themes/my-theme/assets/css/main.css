@@ -21,9 +21,10 @@ footer {
 a {
   color: #0033cc;
   text-decoration: underline;
+  overflow-wrap: break-word;
 }
 
-pre{
+pre {
   overflow: auto;
   background-color: #272822;
   color: #f8f8f2;
@@ -80,7 +81,8 @@ table {
   border: 1px solid gray;
 }
 
-table td, th {
+table td,
+th {
   border-bottom: 1px solid gray;
 }
 
