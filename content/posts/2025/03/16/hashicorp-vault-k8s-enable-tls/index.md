@@ -50,13 +50,13 @@ $ export K8S_CLUSTER_NAME="cluster.local"
 $ export WORKDIR=/tmp/vault
 ```
 
-## 秘密鍵を生成
+### 秘密鍵を生成
 
 ```
 $ openssl genrsa -out ${WORKDIR}/vault.key 2048
 ```
 
-## CSR を作成
+### CSR を作成
 
 ```
 $ cat > ${WORKDIR}/vault-csr.conf <<EOF
@@ -87,7 +87,7 @@ EOF
 $ openssl req -new -key ${WORKDIR}/vault.key -out ${WORKDIR}/vault.csr -config ${WORKDIR}/vault-csr.conf
 ```
 
-## Kubernetes で証明書を発行する
+### Kubernetes で証明書を発行する
 
 先ほど生成した CSR を yaml にする
 
@@ -210,7 +210,7 @@ $ echo $((($(date --date "Jun 24 01:25:02 2025 GMT" +%s)-$(date --date "Mar 16 0
 - CN は`system:node:*.vault.svc.cluster.local`
 - SAN は`DNS:*.vault-internal, DNS:*.vault-internal.vault.svc.cluster.local, DNS:*.vault, IP Address:127.0.0.1`
 
-## 証明書と秘密鍵を Secret リソースにする
+### 証明書と秘密鍵を Secret リソースにする
 
 先ほど発行した証明書を取得
 
@@ -332,9 +332,9 @@ Your release is named vault. To learn more about the release, try:
   $ helm get manifest vault
 ```
 
-## vault-0 をセットアップする
+### vault-0 をセットアップする
 
-### 初期化する
+#### 初期化する
 
 しばらくすると Pod が Running になります
 
@@ -356,7 +356,7 @@ $ kubectl exec -n $VAULT_K8S_NAMESPACE vault-0 -- vault operator init \
     -format=json > ${WORKDIR}/cluster-keys.json
 ```
 
-### Unseal する
+#### Unseal する
 
 初期化しただけだと Seal 状態なのでまだ READY が `0/1`です。
 
@@ -423,9 +423,9 @@ vault-2                                 0/1     Running   0          5m11s
 vault-agent-injector-8666bf4bb8-w9l82   1/1     Running   0          5m21s
 ```
 
-## vault-1 をセットアップする
+### vault-1 をセットアップする
 
-### Raft cluster に Join させる
+#### Raft cluster に Join させる
 
 vault-1 を Raft cluster に join させます。
 
@@ -440,7 +440,7 @@ Joined    true
 / $ exit
 ```
 
-### Unseal する
+#### Unseal する
 
 ```
 $ kubectl exec -n $VAULT_K8S_NAMESPACE -ti vault-1 -- vault operator unseal $VAULT_UNSEAL_KEY
@@ -470,9 +470,9 @@ vault-2                                 0/1     Running   0          7m49s
 vault-agent-injector-8666bf4bb8-w9l82   1/1     Running   0          7m59s
 ```
 
-## vault-2 をセットアップする
+### vault-2 をセットアップする
 
-### Raft cluster に Join させる
+#### Raft cluster に Join させる
 
 ```
 $ kubectl exec -n $VAULT_K8S_NAMESPACE -it vault-2 -- /bin/sh
@@ -484,7 +484,7 @@ Joined    true
 / $ exit
 ```
 
-### Unseal する
+#### Unseal する
 
 ```
 $ kubectl exec -n $VAULT_K8S_NAMESPACE -ti vault-2 -- vault operator unseal $VAULT_UNSEAL_KEY
