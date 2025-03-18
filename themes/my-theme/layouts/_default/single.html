@@ -12,14 +12,17 @@
 </div>
 
 {{ .Content }}
-{{ partial "terms.html" (dict "taxonomy" "tags" "page" .) }}
-{{ with .Parent.Pages.Prev . }}
-前のページ:
-<a href="{{ .RelPermalink }}">{{ .Title }}</a>
-{{ end }}
-<br>
-{{ with .Parent.Pages.Next . }}
-次のページ:
-<a href="{{ .RelPermalink }}">{{ .Title }}</a>
-{{ end }}
+
+<div class="nav">
+  {{ partial "terms.html" (dict "taxonomy" "tags" "page" .) }}
+  {{ with .Parent.Pages.Prev . }}
+  前のページ:
+  <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+  {{ end }}
+  <br>
+  {{ with .Parent.Pages.Next . }}
+  次のページ:
+  <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+  {{ end }}
+</div>
 {{ end }}
