@@ -2,6 +2,9 @@
 title: "Helm ChartをOCIレジストリで公開する"
 date: "2025-03-18T23:00:09+09:00"
 draft: false
+tags:
+  - kubernetes
+  - Helm
 ---
 
 Helm Chart を OCI イメージにしてレジストリで管理できるらしいので試してみる。
