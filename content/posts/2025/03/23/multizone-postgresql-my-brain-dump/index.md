@@ -1,7 +1,10 @@
 ---
 title: "マルチゾーンなPostgreSQLについて考えた時の脳内dump"
 date: "2025-03-23T12:04:28+09:00"
-draft: true
+draft: false
+tags:
+  - PostgreSQL
+  - my-brain-dump
 ---
 
 ## 概要
