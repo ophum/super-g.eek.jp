@@ -2,6 +2,9 @@
 title: "CoreDNSのtransfer pluginを試す"
 date: "2025-04-13T12:54:19+09:00"
 draft: false
+tags:
+  - CoreDNS
+  - NSD
 ---
 
 CoreDNS にゾーン転送を行うプラグイン ([transfer](https://coredns.io/plugins/transfer/))があるので試してみます。

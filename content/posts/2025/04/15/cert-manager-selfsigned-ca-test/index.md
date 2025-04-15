@@ -2,6 +2,9 @@
 title: "cert-managerでプライベート認証局を作ってみる"
 date: "2025-04-15T01:36:10+09:00"
 draft: false
+tags:
+  - Kubernetes
+  - cert-manager
 ---
 
 cert-manager の selfsigned issuer を利用してプライベート認証局を作ってみます。
