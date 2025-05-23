@@ -14,7 +14,7 @@ https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-pol
 
 「Service は ClusterIP のみ定義できる」というバリデーションを設定してみます。
 
-こんな感じで services リソースで spec.type が ClusterIP なら Fail とします。
+こんな感じで services リソースで spec.type が ClusterIP なら許可し、ClusterIP 以外なら拒否します。
 
 ```bash
 hum@ryzen5pc:~$ kubectl apply -f <(cat <<EOF
