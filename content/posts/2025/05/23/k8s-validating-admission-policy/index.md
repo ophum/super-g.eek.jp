@@ -2,6 +2,8 @@
 title: "K8s Validating Admission Policyを試す"
 date: "2025-05-23T23:18:34+09:00"
 draft: false
+tags:
+  - k8s
 ---
 
 Kubernetes でマニフェストを適用する際に、独自のバリデーションをかけることができる Validating Admission Policy を試してみます。
