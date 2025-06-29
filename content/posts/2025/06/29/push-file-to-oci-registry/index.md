@@ -10,7 +10,7 @@ OCI レジストリはコンテナのイメージを保存するのに使うこ�
 
 oras というプロジェクトがまさにそれを行っています。
 
-# GitHub Actions でファイルを ghcr.io に push する
+## oras で ghcr.io にファイルを push するワークフローを GitHub Actions で動かす
 
 以下のような workflow を定義します。
 
@@ -49,13 +49,13 @@ jobs:
 Packages のページでも確認できます。
 ![](./images/package-detail.png)
 
-# oras コマンドでファイルを pull する
+## oras コマンドでファイルを pull する
 
-## public なパッケージの場合(oras)
+### public なパッケージの場合(oras)
 
 public なパッケージだと認証なしで pull できます。
 
-### タグを確認 (oras public)
+#### タグを確認 (oras public)
 
 ```bash
 hum@ryzen5pc:~/oras-test$ oras repo tags ghcr.io/ophum/kakisute/oras-test
@@ -64,7 +64,7 @@ b4b9d43949141020a5a6a1205fd8047e1ff8f06d
 58072af430466fddc68e557e38eea8ca4716c5f6
 ```
 
-### pull する (oras public)
+#### pull する (oras public)
 
 ```bash
 hum@ryzen5pc:~/oras-test$ ls
@@ -86,9 +86,9 @@ hum@ryzen5pc:~/oras-test$ cat output.txt
 Sun Jun 29 05:29:16 UTC 2025
 ```
 
-## private なパッケージの場合 (oras)
+### private なパッケージの場合 (oras)
 
-### oras login
+#### oras login
 
 oras login するか-u, -p オプションで認証情報を指定します。
 
@@ -108,7 +108,7 @@ hum@ryzen5pc:~/oras-test$ gh auth token | oras login -u ophum --password-stdin g
 Login Succeeded
 ```
 
-### pull する(oras private)
+#### pull する(oras private)
 
 ```bash
 hum@ryzen5pc:~/oras-test$ oras pull ghcr.io/ophum/kakisute/oras-test:b4b9d43949141020a5a6a1205fd8047e1ff8f06d
@@ -125,17 +125,17 @@ hum@ryzen5pc:~/oras-test$ cat output.txt
 Sun Jun 29 05:29:16 UTC 2025
 ```
 
-# curl でファイルを pull する
+## curl でファイルを pull する
 
-## public なパッケージの場合 (curl)
+### public なパッケージの場合 (curl)
 
-### トークンを作成 (curl public)
+#### トークンを作成 (curl public)
 
 ```bash
 hum@ryzen5pc:~/oras-test$ curl -so "token.json" "https://ghcr.io/token?service=ghcr.io&scope=repository:ophum/kakisute/oras-test:pull"
 ```
 
-### タグを確認 (curl public)
+#### タグを確認 (curl public)
 
 作成したトークンを Authorization ヘッダーに入れて実行します。
 
@@ -152,7 +152,7 @@ hum@ryzen5pc:~/oras-test$ curl -s -H "Authorization: Bearer $(cat token.json | j
 }
 ```
 
-### マニフェストを確認 (curl public)
+#### マニフェストを確認 (curl public)
 
 ```bash
 hum@ryzen5pc:~/oras-test$ curl -so manifest.json \
@@ -186,7 +186,7 @@ hum@ryzen5pc:~/oras-test$ cat manifest.json | jq
 }
 ```
 
-### output.txt をダウンロードする (curl public)
+#### output.txt をダウンロードする (curl public)
 
 .layers[0].digest を指定してダウンロードします。
 
@@ -197,9 +197,9 @@ hum@ryzen5pc:~/oras-test$ curl -L -s \
 Sun Jun 29 05:28:08 UTC 2025
 ```
 
-## private なパッケージの場合
+### private なパッケージの場合
 
-### トークンを作成 (curl private)
+#### トークンを作成 (curl private)
 
 public の時と同じ URL に Basic 認証付きで実行します。
 
@@ -207,7 +207,7 @@ public の時と同じ URL に Basic 認証付きで実行します。
 hum@ryzen5pc:~/oras-test$ curl -so "token.json" -u ophum:$(gh auth token) "https://ghcr.io/token?service=ghcr.io&scope=repository:ophum/kakisute/oras-test:pull"
 ```
 
-### タグを確認 (curl private)
+#### タグを確認 (curl private)
 
 あとは public の時と同じです。
 作成したトークンを Authorization ヘッダーに入れて実行します。
@@ -224,7 +224,7 @@ hum@ryzen5pc:~/oras-test$ curl -s -H "Authorization: Bearer $(cat token.json | j
 }
 ```
 
-### マニフェストを確認 (curl private)
+#### マニフェストを確認 (curl private)
 
 ```bash
 hum@ryzen5pc:~/oras-test$ curl -so manifest.json \
@@ -258,7 +258,7 @@ hum@ryzen5pc:~/oras-test$ cat manifest.json | jq
 }
 ```
 
-### output.txt をダウンロードする (curl private)
+#### output.txt をダウンロードする (curl private)
 
 .layers[0].digest を指定してダウンロードします。
 
