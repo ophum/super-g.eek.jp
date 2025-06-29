@@ -4,6 +4,12 @@ date: "2025-06-19T22:03:09+09:00"
 draft: false
 ---
 
+2025-06-29 追記
+
+どうやら検証したバージョンが古く最新のバージョン 25.x.y.z だと ON CLUSTER で RESTORE はできないようでした。
+
+---
+
 https://clickhouse.com/docs/operations/backup
 
 環境は docker-compose-recipes の cluster_1S_2R を利用した。
